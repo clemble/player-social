@@ -246,7 +246,7 @@ public class PlayerSocialSpringConfiguration implements SpringConfiguration {
 
         @PostConstruct
         public void initialize() {
-            String url = "http://api" + host + "/social";
+            String url = "http://social" + host;
             signInController.setApplicationUrl(url);
             connectController.setApplicationUrl(url);
         }
