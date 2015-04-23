@@ -6,25 +6,21 @@ import static com.google.common.base.Strings.isNullOrEmpty;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
-import java.util.Date;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.joda.time.DateTime;
 import org.springframework.social.connect.Connection;
-import org.springframework.social.connect.ConnectionData;
 import org.springframework.social.connect.ConnectionFactory;
 import org.springframework.social.connect.ConnectionKey;
 import org.springframework.social.facebook.api.Facebook;
-import org.springframework.social.facebook.api.FacebookProfile;
+import org.springframework.social.facebook.api.User;
 import org.springframework.social.facebook.api.PagedList;
 import org.springframework.social.facebook.api.PagingParameters;
 import org.springframework.social.facebook.connect.FacebookConnectionFactory;
 
 import com.clemble.casino.player.PlayerGender;
 import com.clemble.casino.player.PlayerProfile;
-import com.clemble.casino.social.SocialAccessGrant;
-import com.clemble.casino.social.SocialConnectionData;
 import com.clemble.casino.server.social.SocialAdapter;
 
 public class FacebookSocialAdapter implements SocialAdapter<Facebook> {
@@ -56,7 +52,7 @@ public class FacebookSocialAdapter implements SocialAdapter<Facebook> {
     @Override
     public PlayerProfile fetchPlayerProfile(Facebook facebook) {
         // Step 1. Retrieving facebook profile for associated user
-        FacebookProfile facebookProfile = facebook.userOperations().getUserProfile();
+        User facebookProfile = facebook.userOperations().getUserProfile();
         // Step 2. Generating appropriate GameProfile to return
         return new PlayerProfile()
             .addSocialConnection(toConnectionKey(facebookProfile.getId()))
@@ -64,8 +60,7 @@ public class FacebookSocialAdapter implements SocialAdapter<Facebook> {
             .setNickName(facebookProfile.getName())
             .setLastName(facebookProfile.getLastName())
             .setBirthDate(readDate(facebookProfile.getBirthday()))
-            .setGender(PlayerGender.parse(facebookProfile.getGender()))
-            .setNickName(facebookProfile.getUsername());
+            .setGender(PlayerGender.parse(facebookProfile.getGender()));
     }
 
     @Override
