@@ -13,6 +13,7 @@ import org.joda.time.DateTime;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionFactory;
 import org.springframework.social.connect.ConnectionKey;
+import org.springframework.social.connect.support.OAuth2ConnectionFactory;
 import org.springframework.social.facebook.api.Facebook;
 import org.springframework.social.facebook.api.User;
 import org.springframework.social.facebook.api.PagedList;
@@ -25,9 +26,9 @@ import com.clemble.casino.server.social.SocialAdapter;
 
 public class FacebookSocialAdapter implements SocialAdapter<Facebook> {
 
-    final private FacebookConnectionFactory facebookConnectionFactory;
+    final private OAuth2ConnectionFactory<Facebook> facebookConnectionFactory;
 
-    public FacebookSocialAdapter(FacebookConnectionFactory facebookConnectionFactory) {
+    public FacebookSocialAdapter(OAuth2ConnectionFactory<Facebook> facebookConnectionFactory) {
         this.facebookConnectionFactory = checkNotNull(facebookConnectionFactory);
     }
 
