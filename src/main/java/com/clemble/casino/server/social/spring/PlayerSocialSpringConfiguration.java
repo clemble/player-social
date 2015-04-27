@@ -1,11 +1,8 @@
 package com.clemble.casino.server.social.spring;
 
-import com.clemble.casino.error.ClembleCasinoValidationService;
 import com.clemble.casino.server.security.PlayerTokenUtils;
 import com.clemble.casino.server.social.*;
-import com.clemble.casino.server.security.PlayerTokenFactory;
 import com.clemble.casino.server.social.adapter.*;
-import com.clemble.casino.server.social.facebook.AlternativeFacebookConnectionFactory;
 import com.clemble.casino.server.social.listener.SystemPlayerSocialAddedEventListener;
 import com.clemble.casino.server.social.listener.SystemSharePostEventListener;
 import com.clemble.casino.server.spring.common.CommonSpringConfiguration;
@@ -61,7 +58,7 @@ public class PlayerSocialSpringConfiguration implements SpringConfiguration {
         @Value("${clemble.social.google.key}") String googleKey,
         @Value("${clemble.social.google.secret}") String googleSecret,
         SocialAdapterRegistry socialConnectionAdapterRegistry,
-        AlternativeFacebookConnectionFactory facebookConnectionFactory,
+        FacebookConnectionFactory facebookConnectionFactory,
         GoogleConnectionFactory googleConnectionFactory,
         LinkedInConnectionFactory linkedInConnectionFactory,
         TwitterConnectionFactory twitterConnectionFactory,
@@ -108,10 +105,10 @@ public class PlayerSocialSpringConfiguration implements SpringConfiguration {
     }
 
     @Bean
-    public AlternativeFacebookConnectionFactory facebookConnectionFactory(
+    public FacebookConnectionFactory facebookConnectionFactory(
             @Value("${clemble.social.facebook.key}") String key,
             @Value("${clemble.social.facebook.secret}") String secret) {
-        return new AlternativeFacebookConnectionFactory(key, secret);
+        return new FacebookConnectionFactory(key, secret);
     }
 
     @Bean
