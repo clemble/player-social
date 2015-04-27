@@ -41,9 +41,10 @@ public class TwitterSocialAdapter implements SocialAdapter<Twitter> {
     @Override
     public PlayerProfile fetchPlayerProfile(Twitter api) {
         TwitterProfile twitterProfile = api.userOperations().getUserProfile();
-        return new PlayerProfile()
-                .addSocialConnection(toConnectionKey(String.valueOf(twitterProfile.getId())))
-                .setNickName(twitterProfile.getName());  //To change body of implemented methods use File | Settings | File Templates.
+        return new PlayerProfile().
+                addSocialConnection(toConnectionKey(String.valueOf(twitterProfile.getId()))).
+                setTimezone(twitterProfile.getTimeZone()).
+                setNickName(twitterProfile.getName());  //To change body of implemented methods use File | Settings | File Templates.
     }
 
     @Override

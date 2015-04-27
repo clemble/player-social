@@ -38,6 +38,7 @@ public class VKontakteSocialAdapter implements SocialAdapter<VKontakte> {
     @Override
     public PlayerProfile fetchPlayerProfile(VKontakte api) {
         VKontakteProfile profile = api.usersOperations().getUser();
+        // TODO add timezone to VK
         // Step 2. Generating appropriate GameProfile to return
         return new PlayerProfile()
             .addSocialConnection(toConnectionKey(profile.getUid()))

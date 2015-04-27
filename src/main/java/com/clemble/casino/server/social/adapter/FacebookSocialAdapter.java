@@ -10,6 +10,7 @@ import java.util.Collection;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionFactory;
 import org.springframework.social.connect.ConnectionKey;
@@ -54,14 +55,19 @@ public class FacebookSocialAdapter implements SocialAdapter<Facebook> {
     public PlayerProfile fetchPlayerProfile(Facebook facebook) {
         // Step 1. Retrieving facebook profile for associated user
         User facebookProfile = facebook.userOperations().getUserProfile();
+        // Step 1.1. Checking facebook timezone
+        int hours = facebookProfile.getTimezone().intValue();
+        int minutes = (int) Math.abs((facebookProfile.getTimezone().doubleValue() - hours) * 60);
+        DateTimeZone timeZone = DateTimeZone.forOffsetHoursMinutes(hours, minutes);
         // Step 2. Generating appropriate GameProfile to return
         return new PlayerProfile()
-            .addSocialConnection(toConnectionKey(facebookProfile.getId()))
-            .setFirstName(facebookProfile.getFirstName())
-            .setNickName(facebookProfile.getName())
-            .setLastName(facebookProfile.getLastName())
-            .setBirthDate(readDate(facebookProfile.getBirthday()))
-            .setGender(PlayerGender.parse(facebookProfile.getGender()));
+                .addSocialConnection(toConnectionKey(facebookProfile.getId()))
+                .setFirstName(facebookProfile.getFirstName())
+                .setNickName(facebookProfile.getName())
+                .setLastName(facebookProfile.getLastName())
+                .setBirthDate(readDate(facebookProfile.getBirthday()))
+                .setGender(PlayerGender.parse(facebookProfile.getGender()))
+                .setTimezone(timeZone.getID());
     }
 
     @Override
