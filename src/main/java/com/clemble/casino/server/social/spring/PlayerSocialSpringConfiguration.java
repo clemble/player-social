@@ -22,12 +22,17 @@ import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.social.connect.ConnectionSignUp;
 import org.springframework.social.connect.UsersConnectionRepository;
 import org.springframework.social.connect.support.ConnectionFactoryRegistry;
+import org.springframework.social.connect.support.OAuth2ConnectionFactory;
 import org.springframework.social.connect.web.ConnectController;
 import org.springframework.social.connect.web.ProviderSignInController;
 import org.springframework.social.connect.web.SignInAdapter;
+import org.springframework.social.facebook.api.Facebook;
 import org.springframework.social.facebook.connect.FacebookConnectionFactory;
 import org.springframework.social.google.connect.GoogleConnectionFactory;
 import org.springframework.social.linkedin.connect.LinkedInConnectionFactory;
+import org.springframework.social.oauth2.OAuth2Operations;
+import org.springframework.social.oauth2.OAuth2Template;
+import org.springframework.social.oauth2.OAuth2TemplateUtils;
 import org.springframework.social.twitter.connect.TwitterConnectionFactory;
 
 import com.clemble.casino.server.player.notification.SystemNotificationService;
@@ -59,7 +64,7 @@ public class PlayerSocialSpringConfiguration implements SpringConfiguration {
         @Value("${clemble.social.google.key}") String googleKey,
         @Value("${clemble.social.google.secret}") String googleSecret,
         SocialAdapterRegistry socialConnectionAdapterRegistry,
-        AlternativeFacebookConnectionFactory facebookConnectionFactory,
+        OAuth2ConnectionFactory<Facebook> facebookConnectionFactory,
         GoogleConnectionFactory googleConnectionFactory,
         LinkedInConnectionFactory linkedInConnectionFactory,
         TwitterConnectionFactory twitterConnectionFactory,
@@ -106,10 +111,13 @@ public class PlayerSocialSpringConfiguration implements SpringConfiguration {
     }
 
     @Bean
-    public AlternativeFacebookConnectionFactory facebookConnectionFactory(
+    public OAuth2ConnectionFactory<Facebook> facebookConnectionFactory(
             @Value("${clemble.social.facebook.key}") String key,
             @Value("${clemble.social.facebook.secret}") String secret) {
-        return new AlternativeFacebookConnectionFactory(key, secret);
+        FacebookConnectionFactory facebookConnectionFactory = new FacebookConnectionFactory(key, secret);
+        OAuth2Template oAuth2Template = (OAuth2Template) facebookConnectionFactory.getOAuthOperations();
+        OAuth2TemplateUtils.increaseTimeout(oAuth2Template, 180_000);
+        return facebookConnectionFactory;
     }
 
     @Bean
