@@ -114,10 +114,10 @@ public class PlayerSocialSpringConfiguration implements SpringConfiguration {
     public OAuth2ConnectionFactory<Facebook> facebookConnectionFactory(
             @Value("${clemble.social.facebook.key}") String key,
             @Value("${clemble.social.facebook.secret}") String secret) {
-        FacebookConnectionFactory facebookConnectionFactory = new FacebookConnectionFactory(key, secret);
-        OAuth2Template oAuth2Template = (OAuth2Template) facebookConnectionFactory.getOAuthOperations();
-        OAuth2TemplateUtils.increaseTimeout(oAuth2Template, 180_000);
-        return facebookConnectionFactory;
+//        FacebookConnectionFactory facebookConnectionFactory = new FacebookConnectionFactory(key, secret);
+//        OAuth2Template oAuth2Template = (OAuth2Template) facebookConnectionFactory.getOAuthOperations();
+//        OAuth2TemplateUtils.increaseTimeout(oAuth2Template, 180_000);
+        return new AlternativeFacebookConnectionFactory(key, secret);
     }
 
     @Bean
