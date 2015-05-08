@@ -6,13 +6,13 @@ import com.clemble.casino.server.ExternalController;
 import org.springframework.web.bind.annotation.*;
 
 import com.clemble.casino.social.SocialConnectionData;
-import com.clemble.casino.social.service.PlayerSocialProfileServiceContract;
+import com.clemble.casino.social.service.PlayerSocialProfileService;
 import com.clemble.casino.server.social.SocialConnectionDataAdapter;
 import com.clemble.casino.WebMapping;
 import static com.clemble.casino.social.SocialWebMapping.*;
 
 @RestController
-public class PlayerSocialProfileController implements PlayerSocialProfileServiceContract, ExternalController {
+public class PlayerSocialProfileController implements PlayerSocialProfileService, ExternalController {
 
     final private SocialConnectionDataAdapter socialConnectionDataAdapter;
 

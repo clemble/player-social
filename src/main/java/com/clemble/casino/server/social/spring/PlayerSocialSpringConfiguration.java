@@ -3,6 +3,7 @@ package com.clemble.casino.server.social.spring;
 import com.clemble.casino.server.security.PlayerTokenUtils;
 import com.clemble.casino.server.social.*;
 import com.clemble.casino.server.social.adapter.*;
+import com.clemble.casino.server.social.controller.PlayerSocialProfileController;
 import com.clemble.casino.server.social.facebook.AlternativeFacebookConnectionFactory;
 import com.clemble.casino.server.social.listener.SystemPlayerSocialAddedEventListener;
 import com.clemble.casino.server.social.listener.SystemSharePostEventListener;
@@ -57,6 +58,11 @@ public class PlayerSocialSpringConfiguration implements SpringConfiguration {
             ConnectionFactoryRegistry connectionFactoryLocator,
             SystemNotificationService systemNotificationService) {
         return new SocialConnectionDataAdapter(connectionFactoryLocator, usersConnectionRepository, socialConnectionAdapterRegistry, systemNotificationService);
+    }
+
+    @Bean
+    public PlayerSocialProfileController playerSocialProfileController(SocialConnectionDataAdapter socialConnectionDataAdapter) {
+        return new PlayerSocialProfileController(socialConnectionDataAdapter);
     }
 
     @Bean
