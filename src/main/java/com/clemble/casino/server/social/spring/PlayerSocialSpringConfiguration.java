@@ -28,16 +28,11 @@ import org.springframework.social.connect.web.ConnectController;
 import org.springframework.social.connect.web.ProviderSignInController;
 import org.springframework.social.connect.web.SignInAdapter;
 import org.springframework.social.facebook.api.Facebook;
-import org.springframework.social.facebook.connect.FacebookConnectionFactory;
 import org.springframework.social.google.connect.GoogleConnectionFactory;
 import org.springframework.social.linkedin.connect.LinkedInConnectionFactory;
-import org.springframework.social.oauth2.OAuth2Operations;
-import org.springframework.social.oauth2.OAuth2Template;
-import org.springframework.social.oauth2.OAuth2TemplateUtils;
 import org.springframework.social.twitter.connect.TwitterConnectionFactory;
 
 import com.clemble.casino.server.player.notification.SystemNotificationService;
-import com.clemble.casino.server.player.notification.SystemNotificationServiceListener;
 import com.clemble.casino.server.spring.common.SpringConfiguration;
 import org.springframework.social.vkontakte.connect.VKontakteConnectionFactory;
 import org.springframework.web.context.request.NativeWebRequest;
@@ -99,20 +94,16 @@ public class PlayerSocialSpringConfiguration implements SpringConfiguration {
     public SystemPlayerSocialAddedEventListener socialNetworkPopulator(
             SocialAdapterRegistry socialAdapterRegistry,
             SystemNotificationService notificationService,
-            UsersConnectionRepository usersConnectionRepository,
-            SystemNotificationServiceListener serviceListener) {
+            UsersConnectionRepository usersConnectionRepository) {
         SystemPlayerSocialAddedEventListener networkPopulator = new SystemPlayerSocialAddedEventListener(socialAdapterRegistry, usersConnectionRepository, notificationService);
-        serviceListener.subscribe(networkPopulator);
         return networkPopulator;
     }
 
     @Bean
     public SystemSharePostEventListener systemSharePostEventListener(
             SocialAdapterRegistry socialAdapterRegistry,
-            UsersConnectionRepository usersConnectionRepository,
-            SystemNotificationServiceListener serviceListener) {
+            UsersConnectionRepository usersConnectionRepository) {
         SystemSharePostEventListener networkPopulator = new SystemSharePostEventListener(socialAdapterRegistry, usersConnectionRepository);
-        serviceListener.subscribe(networkPopulator);
         return networkPopulator;
     }
 
