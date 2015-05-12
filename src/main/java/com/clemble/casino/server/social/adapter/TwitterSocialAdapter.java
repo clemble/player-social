@@ -2,6 +2,7 @@ package com.clemble.casino.server.social.adapter;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
+import org.joda.time.DateTimeZone;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionData;
 import org.springframework.social.connect.ConnectionFactory;
@@ -43,7 +44,7 @@ public class TwitterSocialAdapter implements SocialAdapter<Twitter> {
         TwitterProfile twitterProfile = api.userOperations().getUserProfile();
         return new PlayerProfile().
                 addSocialConnection(toConnectionKey(String.valueOf(twitterProfile.getId()))).
-                setTimezone(twitterProfile.getTimeZone()).
+                setTimezone(DateTimeZone.forID(twitterProfile.getTimeZone())).
                 setNickName(twitterProfile.getName());  //To change body of implemented methods use File | Settings | File Templates.
     }
 

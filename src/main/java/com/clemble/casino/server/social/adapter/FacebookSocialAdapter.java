@@ -67,7 +67,7 @@ public class FacebookSocialAdapter implements SocialAdapter<Facebook> {
                 .setLastName(facebookProfile.getLastName())
                 .setBirthDate(readDate(facebookProfile.getBirthday()))
                 .setGender(PlayerGender.parse(facebookProfile.getGender()))
-                .setTimezone(timeZone.getID());
+                .setTimezone(timeZone);
     }
 
     @Override
