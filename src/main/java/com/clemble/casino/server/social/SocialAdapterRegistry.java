@@ -32,7 +32,7 @@ public class SocialAdapterRegistry {
         SocialAdapter<?> connectionAdapter = ADAPTERS_MAP.get(provider);
         // Step 2. Sanity check
         if (connectionAdapter == null)
-            throw ClembleCasinoException.fromError(ClembleCasinoError.SocialConnectionProviderNotSupported, PlayerAware.DEFAULT_PLAYER, provider.name());
+            throw ClembleCasinoException.fromError(ClembleCasinoError.SocialConnectionProviderNotSupported);
         // Step 3. Returning found ConnectionAdapters
         return connectionAdapter;
     }
