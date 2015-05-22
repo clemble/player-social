@@ -52,7 +52,7 @@ public class SocialConnectionDataAdapter {
         LOG.debug("register with {}", accessGrant);
         // Step 1. Sanity check
         if (accessGrant == null)
-            throw ClembleException.fromError(ClembleErrorCode.SocialConnectionInvalid);
+            throw ClembleException.withServerError(ClembleErrorCode.SocialConnectionInvalid);
         // Step 2. Creating ConnectionData
         ConnectionData connectionData = socialAdapterRegistry.getSocialAdapter(accessGrant.getProvider()).toConnectionData(accessGrant);
         LOG.debug("register normalized to {}", connectionData);
@@ -64,7 +64,7 @@ public class SocialConnectionDataAdapter {
         LOG.debug("register with {}", socialConnectionData);
         // Step 1. Sanity check
         if (socialConnectionData == null)
-            throw ClembleException.fromError(ClembleErrorCode.SocialConnectionInvalid);
+            throw ClembleException.withServerError(ClembleErrorCode.SocialConnectionInvalid);
         // Step 3. Converting SocialConnectionData to ConnectionData in accordance with the provider
         ConnectionData connectionData = socialAdapterRegistry.getSocialAdapter(socialConnectionData.getProviderId()).toConnectionData(socialConnectionData);
         LOG.debug("register normalized to {}", connectionData);
@@ -78,7 +78,7 @@ public class SocialConnectionDataAdapter {
         Set<String> existingUsers = usersConnectionRepository.findUserIdsConnectedTo(connectionData.getProviderId(), ImmutableSet.<String> of(connectionData.getProviderUserId()));
         LOG.debug("register fetched {}", existingUsers);
         if (existingUsers.size() > 1)
-            throw ClembleException.fromError(ClembleErrorCode.SocialConnectionInvalid);
+            throw ClembleException.withServerError(ClembleErrorCode.SocialConnectionInvalid);
         // This is for signIn through spring - key generated prior to processing, by the time it reaches
         // here user could already exist
         if (existingUsers.size() == 1) {
@@ -96,7 +96,7 @@ public class SocialConnectionDataAdapter {
                 connectionRepository.updateConnection(connection);
             } else {
                 LOG.error("register {} test FAILED for {}, throwing exception", player, connection.getKey());
-                throw ClembleException.fromError(ClembleErrorCode.SocialConnectionInvalid);
+                throw ClembleException.withServerError(ClembleErrorCode.SocialConnectionInvalid);
             }
         }
         LOG.debug("register new player from {}:{}", connectionData.getProviderId(), connectionData.getProviderUserId());
@@ -139,7 +139,7 @@ public class SocialConnectionDataAdapter {
     public SocialConnectionData add(String player, SocialConnectionData socialConnectionData) {
         // Step 1. Sanity check
         if (socialConnectionData == null)
-            throw ClembleException.fromError(ClembleErrorCode.SocialConnectionInvalid);
+            throw ClembleException.withServerError(ClembleErrorCode.SocialConnectionInvalid);
         // Step 2. Creating connection to Social network
         ConnectionData connectionData = socialAdapterRegistry.getSocialAdapter(socialConnectionData.getProviderId()).toConnectionData(socialConnectionData);
         Connection<?> connection = connectionFactoryLocator.getConnectionFactory(connectionData.getProviderId()).createConnection(connectionData);
@@ -148,7 +148,7 @@ public class SocialConnectionDataAdapter {
         if (existingUsers.size() == 1) {
             String existingUser = existingUsers.iterator().next();
             if (!existingUser.equals(player)) {
-                throw ClembleException.fromError(ClembleErrorCode.SocialConnectionAlreadyRegistered);
+                throw ClembleException.withServerError(ClembleErrorCode.SocialConnectionAlreadyRegistered);
             }
         }
         // Step 4. Adding connection to player connection repository

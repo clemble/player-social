@@ -23,7 +23,7 @@ public class SocialAdapterRegistry {
         SocialAdapter<?> connectionAdapter = ADAPTERS_MAP.get(provider);
         // Step 2. Sanity check
         if (connectionAdapter == null)
-            throw ClembleException.fromError(ClembleErrorCode.SocialConnectionProviderNotSupported);
+            throw ClembleException.withServerError(ClembleErrorCode.SocialConnectionProviderNotSupported);
         // Step 3. Returning found ConnectionAdapters
         return connectionAdapter;
     }
