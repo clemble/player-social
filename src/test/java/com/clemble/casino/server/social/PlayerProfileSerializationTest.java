@@ -36,7 +36,7 @@ public class PlayerProfileSerializationTest {
     public ObjectMapper objectMapper;
 
     @Test
-    public void testSerialization() throws JsonGenerationException, JsonMappingException, IOException, ParseException {
+    public void testSerialization() throws IOException, ParseException {
         PlayerProfile expected = new PlayerProfile()
             .setFirstName(FIRST_NAME)
             .setLastName(LAST_NAME)
@@ -59,7 +59,7 @@ public class PlayerProfileSerializationTest {
     }
 
     @Test
-    public void testDeserialization() throws JsonGenerationException, JsonMappingException, IOException, ParseException {
+    public void testDeserialization() throws IOException, ParseException {
         // Step 1. Reading data from the output stream
         PlayerProfile actual = objectMapper.readValue(JSON_PRESENTATION.getBytes(), PlayerProfile.class);
         // Step 4. Check data value

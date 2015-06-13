@@ -75,7 +75,7 @@ public class SocialConnectionDataAdapter {
     public String register(ConnectionData connectionData) {
         // Step 1. Checking if user already exists
         LOG.debug("register search for existing users {}", connectionData);
-        Set<String> existingUsers = usersConnectionRepository.findUserIdsConnectedTo(connectionData.getProviderId(), ImmutableSet.<String> of(connectionData.getProviderUserId()));
+        Set<String> existingUsers = usersConnectionRepository.findUserIdsConnectedTo(connectionData.getProviderId(), ImmutableSet.of(connectionData.getProviderUserId()));
         LOG.debug("register fetched {}", existingUsers);
         if (existingUsers.size() > 1)
             throw ClembleException.withServerError(ClembleErrorCode.SocialConnectionInvalid);
@@ -144,7 +144,7 @@ public class SocialConnectionDataAdapter {
         ConnectionData connectionData = socialAdapterRegistry.getSocialAdapter(socialConnectionData.getProviderId()).toConnectionData(socialConnectionData);
         Connection<?> connection = connectionFactoryLocator.getConnectionFactory(connectionData.getProviderId()).createConnection(connectionData);
         // Step 3. Checking user is valid
-        Set<String> existingUsers = usersConnectionRepository.findUserIdsConnectedTo(socialConnectionData.getProviderId().name(), ImmutableSet.<String> of(socialConnectionData.getProviderUserId()));
+        Set<String> existingUsers = usersConnectionRepository.findUserIdsConnectedTo(socialConnectionData.getProviderId().name(), ImmutableSet.of(socialConnectionData.getProviderUserId()));
         if (existingUsers.size() == 1) {
             String existingUser = existingUsers.iterator().next();
             if (!existingUser.equals(player)) {

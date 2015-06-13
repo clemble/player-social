@@ -42,7 +42,7 @@ public class SocialConnectionDataSerializationTest {
     public ObjectMapper objectMapper;
 
     @Test
-    public void testSerialization() throws JsonGenerationException, JsonMappingException, IOException {
+    public void testSerialization() throws IOException {
         // Step 1. Generating data
         SocialConnectionData expected = new SocialConnectionData(PROVIDER_ID, PROVIDER_USER_ID, ACCESS_TOKEN, SECRET, REFRESH_TOKEN, EXPIRE_TIME);
         // Step 2. Saving data to the output stream
@@ -61,7 +61,7 @@ public class SocialConnectionDataSerializationTest {
     }
 
     @Test
-    public void testDeserialization() throws JsonParseException, JsonMappingException, IOException {
+    public void testDeserialization() throws IOException {
         // Step 1. Checking predefined JSON value
         SocialConnectionData expected = objectMapper.readValue(JSON_PRESENTATION.getBytes(), SocialConnectionData.class);
         // Step 2. Checking read data is t

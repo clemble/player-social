@@ -34,7 +34,7 @@ public class UserConnectionRepositoryTest {
 
     @Test
     public void testCreated() {
-        Set<String> providerUserIds = ImmutableSet.<String>of("A");
+        Set<String> providerUserIds = ImmutableSet.of("A");
         Query query = query(where("providerId").is("facebook").and("providerUserId").in(providerUserIds));
         query.fields().include("userId");
     }
