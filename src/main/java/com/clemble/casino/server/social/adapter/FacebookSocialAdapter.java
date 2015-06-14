@@ -76,10 +76,9 @@ public class FacebookSocialAdapter implements SocialAdapter<Facebook> {
     }
 
     @Override
-    public Pair<String, String> toImageUrl(Connection<Facebook> connectionKey) {
-        String primaryImage = "http://graph.facebook.com/" + connectionKey.getKey().getProviderUserId() + "/picture";
-        String smallImage = primaryImage + "?redirect=1&height=48&type=small&width=48";
-        return new ImmutablePair<String, String>(primaryImage, smallImage);
+    public String toImageUrl(Connection<Facebook> connectionKey) {
+        String primaryImage = "http://graph.facebook.com/" + connectionKey.getKey().getProviderUserId() + "/picture?redirect=1&height={height}&type=small&width={width}";
+        return primaryImage;
     }
 
     @Override

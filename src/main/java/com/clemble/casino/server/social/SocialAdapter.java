@@ -1,6 +1,5 @@
 package com.clemble.casino.server.social;
 
-import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.social.ApiBinding;
 import org.springframework.social.connect.*;
 
@@ -24,7 +23,7 @@ public interface SocialAdapter<A extends ApiBinding> {
 
     String share(String userId, String message, A api);
 
-    Pair<String, String> toImageUrl(Connection<A> connectionKey);
+    String toImageUrl(Connection<A> connectionKey);
 
     default ConnectionData toConnectionData(SocialAccessGrant accessGrant) {
         ConnectionFactory<A> connectionFactory = getConnectionFactory();

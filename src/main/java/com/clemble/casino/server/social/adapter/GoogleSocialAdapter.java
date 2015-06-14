@@ -87,13 +87,12 @@ public class GoogleSocialAdapter implements SocialAdapter<Google> {
     }
 
     @Override
-    public Pair<String, String> toImageUrl(Connection<Google> connection) {
+    public String toImageUrl(Connection<Google> connection) {
         // Step 1. Fetching API's
         Google api = connection.getApi();
         // Step 2. Fetching image URL
         Person profile = api.plusOperations().getGoogleProfile();
-        String imageUrl = profile.getImageUrl();
-        return new ImmutablePair<String, String>(imageUrl, imageUrl);
+        return profile.getImageUrl();
     }
 
     @Override

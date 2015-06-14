@@ -60,10 +60,9 @@ public class LinkedInSocialAdapter implements SocialAdapter<LinkedIn> {
     }
 
     @Override
-    public Pair<String, String> toImageUrl(Connection<LinkedIn> connection) {
+    public String toImageUrl(Connection<LinkedIn> connection) {
         String primaryImage = connection.getApi().profileOperations().getUserProfileFull().getProfilePictureUrl();
-        String smallImage = primaryImage;
-        return new ImmutablePair<>(primaryImage, smallImage);
+        return primaryImage;
     }
 
     @Override

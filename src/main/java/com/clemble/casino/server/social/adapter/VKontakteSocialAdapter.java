@@ -65,11 +65,11 @@ public class VKontakteSocialAdapter implements SocialAdapter<VKontakte> {
     }
 
     @Override
-    public Pair<String, String> toImageUrl(Connection<VKontakte> connectionKey) {
+    public String toImageUrl(Connection<VKontakte> connectionKey) {
         // Step 1. Fetching profile
         VKontakteProfile profile = connectionKey.getApi().usersOperations().getUser();
         // Step 2. Processing images
-        return new ImmutablePair<String, String>(profile.getPhotoBig(), profile.getPhotoMedium());
+        return profile.getPhotoBig();
     }
 
     private DateTime toDate(VKontakteDate date) {

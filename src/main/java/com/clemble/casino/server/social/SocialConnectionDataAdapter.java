@@ -125,12 +125,12 @@ public class SocialConnectionDataAdapter {
             notificationService.send(new SystemEmailAddedEvent(player, email, true));
         }
         // Step 6. Notifying of added social connection
-        Pair<String, String> imageUrl = adapter.toImageUrl(connection);
-        LOG.debug("register {} updating player picture", player, imageUrl.getLeft());
+        String imageUrl = adapter.toImageUrl(connection);
+        LOG.debug("register {} updating player picture", player, imageUrl);
         if (imageUrl != null) {
-            notificationService.send(new SystemPlayerImageChangedEvent(player, imageUrl.getLeft(), imageUrl.getRight()));
+            notificationService.send(new SystemPlayerImageChangedEvent(player, imageUrl));
         }
-        LOG.debug("register {} notifying social added to update connections", player, imageUrl.getLeft());
+        LOG.debug("register {} notifying social added to update connections", player, imageUrl);
         // Step 9. Returning player profile
         LOG.debug("register {} returning", player);
         return player;

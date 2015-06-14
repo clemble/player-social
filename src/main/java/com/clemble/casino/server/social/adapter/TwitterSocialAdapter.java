@@ -54,10 +54,9 @@ public class TwitterSocialAdapter implements SocialAdapter<Twitter> {
     }
 
     @Override
-    public Pair<String, String> toImageUrl(Connection<Twitter> connection) {
-        String primaryImage = connection.getApi().userOperations().getUserProfile().getProfileImageUrl();
-        String smallImage = primaryImage + "?size=normal";
-        return new ImmutablePair<>(primaryImage, smallImage);
+    public String toImageUrl(Connection<Twitter> connection) {
+        String primaryImage = connection.getApi().userOperations().getUserProfile().getProfileImageUrl() + "?size=bigger";
+        return primaryImage;
     }
 
     @Override
